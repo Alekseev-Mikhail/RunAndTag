@@ -26,5 +26,8 @@ var movement = new MovementController(player, map, settings);
 var viewport = new Viewport(player, map, settings, 200);
 var window = new GameWindow(400, 400, "Run 'n' Tag", Styles.Close, preSettings, settings, viewport);
 
+var client = new GameClient();
+
+client.Connect("localhost", 8080, 60);
 window.BindKeyboardController(movement);
 window.StartBlocking();

@@ -11,12 +11,19 @@
       <Reference Include="Client">
         <HintPath>..\VoltageEngine\Client\bin\Debug\net8.0\Client.dll</HintPath>
       </Reference>
+      <Reference Include="ClientNetwork">
+        <HintPath>..\VoltageEngine\ClientNetwork\bin\Debug\net8.0\ClientNetwork.dll</HintPath>
+      </Reference>
       <Reference Include="Core">
         <HintPath>..\VoltageEngine\Core\bin\Debug\net8.0\Core.dll</HintPath>
+      </Reference>
+      <Reference Include="RunAndTagCore">
+        <HintPath>..\RunAndTagCore\bin\Debug\net8.0\RunAndTagCore.dll</HintPath>
       </Reference>
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="LiteNetLib" Version="1.2.0" />
       <PackageReference Include="SFML.Net" Version="2.6.0" />
     </ItemGroup>
 
