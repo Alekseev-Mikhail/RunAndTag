@@ -1,12 +1,13 @@
 using Client;
 using Core;
+using RunAndTagCore;
 using SFML.Window;
 
 namespace RunAndTag;
 
-public class MovementController(Player player, Map map, Settings settings) : KeyboardController
+public class MovementController(LocalWorld world, Settings settings) : KeyboardController
 {
-    private readonly RayMath _rayMath = new(player, map);
+    private readonly RayMath _rayMath = new();
 
     public override void OnSetup()
     {
@@ -23,14 +24,14 @@ public class MovementController(Player player, Map map, Settings settings) : Key
 
     public override void OnKeyReleased(KeyEventArgs args) => TurnOffRepeatKey(args.Code);
 
-    private void RotatePlayer(float delta) => player.Direction += delta;
+    private void RotatePlayer(float delta) => world.Me.Direction += delta;
 
     private void MovePlayer(float direction)
     {
-        _rayMath.Step(float.DegreesToRadians(direction), player.Velocity);
+        _rayMath.Step(world.Me, world.Map, float.DegreesToRadians(direction), world.Me.Velocity);
 
         if (_rayMath.ResultRay.IsWallExist) return;
-        player.X = _rayMath.ResultRay.Target.X;
-        player.Y = _rayMath.ResultRay.Target.Y;
+        world.Me.X = _rayMath.ResultRay.Target.X;
+        world.Me.Y = _rayMath.ResultRay.Target.Y;
     }
 }
