@@ -5,7 +5,7 @@ using SFML.Graphics;
 
 namespace RunAndTag;
 
-public class Viewport(LocalWorld world, Settings settings, uint playerViewRayCount) : IViewport
+public class Viewport(LocalWorld world, Config config) : IViewport
 {
     private readonly RayMath _rayMath = new();
     private readonly Ray _lastPlayerViewRay = new();
@@ -53,17 +53,17 @@ public class Viewport(LocalWorld world, Settings settings, uint playerViewRayCou
 
     private void RenderPlayerView(Render render, Player player, float tileSize)
     {
-        var startDirection = player.Direction - settings.FOV / 2f;
-        var degreePerRay = settings.FOV / playerViewRayCount;
+        var startDirection = player.Direction - config.Fov / 2f;
+        var degreePerRay = config.Fov / config.PlayerViewRayCount;
 
-        for (var rayIndex = 0; rayIndex < playerViewRayCount; rayIndex++)
+        for (var rayIndex = 0; rayIndex < config.PlayerViewRayCount; rayIndex++)
         {
             var currentDirection = startDirection + rayIndex * degreePerRay;
             var currentDirectionInRadians = float.DegreesToRadians(currentDirection);
-            _rayMath.Release(player, world.Map, currentDirectionInRadians, settings.RenderDistance,
-                settings.GraphicQuality);
+            _rayMath.Release(player, world.Map, currentDirectionInRadians, config.RenderDistance,
+                config.GraphicQuality);
 
-            if (rayIndex == 0 || rayIndex == playerViewRayCount - 1) RenderFullRay(render, player, tileSize);
+            if (rayIndex == 0 || rayIndex == config.PlayerViewRayCount - 1) RenderFullRay(render, player, tileSize);
             else if (!IsNeighbourTile()) RenderPartialRay(render, tileSize);
 
             _lastPlayerViewRay.Copy(_rayMath.ResultRay);

@@ -5,14 +5,14 @@ using SFML.Window;
 
 namespace RunAndTag;
 
-public class MovementController(LocalWorld world, Settings settings) : KeyboardController
+public class MovementController(LocalWorld world, Config config) : KeyboardController
 {
     private readonly RayMath _rayMath = new();
 
     public override void OnSetup()
     {
-        AddRepeatKey(Keyboard.Key.Left, () => RotatePlayer(-settings.Sensitivity));
-        AddRepeatKey(Keyboard.Key.Right, () => RotatePlayer(settings.Sensitivity));
+        AddRepeatKey(Keyboard.Key.Left, () => RotatePlayer(-config.Sensitivity));
+        AddRepeatKey(Keyboard.Key.Right, () => RotatePlayer(config.Sensitivity));
 
         AddRepeatKey(Keyboard.Key.W, () => MovePlayer(270f));
         AddRepeatKey(Keyboard.Key.S, () => MovePlayer(90f));
