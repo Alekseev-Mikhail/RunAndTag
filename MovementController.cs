@@ -11,8 +11,8 @@ public class MovementController(LocalWorld world, Config config) : KeyboardContr
 
     public override void OnSetup()
     {
-        AddRepeatKey(Keyboard.Key.Left, () => RotatePlayer(-config.Sensitivity));
-        AddRepeatKey(Keyboard.Key.Right, () => RotatePlayer(config.Sensitivity));
+        AddRepeatKey(Keyboard.Key.Left, () => RotatePlayer(-world.Me.RotationVelocity));
+        AddRepeatKey(Keyboard.Key.Right, () => RotatePlayer(world.Me.RotationVelocity));
 
         AddRepeatKey(Keyboard.Key.W, () => MovePlayer(270f));
         AddRepeatKey(Keyboard.Key.S, () => MovePlayer(90f));
@@ -28,7 +28,7 @@ public class MovementController(LocalWorld world, Config config) : KeyboardContr
 
     private void MovePlayer(float direction)
     {
-        _rayMath.Step(world.Me, world.Map, float.DegreesToRadians(direction), world.Me.Velocity);
+        _rayMath.Step(world.Me, world.Map, float.DegreesToRadians(direction), world.Me.MovementVelocity);
 
         if (_rayMath.ResultRay.IsWallExist) return;
         world.Me.X = _rayMath.ResultRay.Target.X;

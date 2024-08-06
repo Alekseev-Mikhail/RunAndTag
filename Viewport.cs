@@ -53,15 +53,15 @@ public class Viewport(LocalWorld world, Config config) : IViewport
 
     private void RenderPlayerView(Render render, Player player, float tileSize)
     {
-        var startDirection = player.Direction - config.Fov / 2f;
-        var degreePerRay = config.Fov / config.PlayerViewRayCount;
+        var startDirection = player.Direction - player.Fov / 2f;
+        var degreePerRay = player.Fov / config.PlayerViewRayCount;
 
         for (var rayIndex = 0; rayIndex < config.PlayerViewRayCount; rayIndex++)
         {
             var currentDirection = startDirection + rayIndex * degreePerRay;
             var currentDirectionInRadians = float.DegreesToRadians(currentDirection);
-            _rayMath.Release(player, world.Map, currentDirectionInRadians, config.RenderDistance,
-                config.GraphicQuality);
+            _rayMath.Release(player, world.Map, currentDirectionInRadians, player.MaxRayDistance,
+                player.RayStep);
 
             if (rayIndex == 0 || rayIndex == config.PlayerViewRayCount - 1) RenderFullRay(render, player, tileSize);
             else if (!IsNeighbourTile()) RenderPartialRay(render, tileSize);
