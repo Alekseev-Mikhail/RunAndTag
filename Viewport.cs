@@ -5,7 +5,7 @@ using SFML.Graphics;
 
 namespace RunAndTag;
 
-public class Viewport(LocalWorld world, Config config) : IViewport
+public class Viewport(World world, Config config) : IViewport
 {
     private readonly RayMath _rayMath = new();
     private readonly Ray _lastPlayerViewRay = new();

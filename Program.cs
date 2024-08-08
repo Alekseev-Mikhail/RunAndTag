@@ -49,7 +49,7 @@ const string tileSet = "                                            " +
 const int mapWidth = 44;
 var loadingScreen = new Map(tileSet, mapWidth, '#');
 var emptyPlayer = new Player(2.6f, 24.3f, 0f, 0.1f, 0.1f, 0.1f, 0f, 0f);
-var world = new LocalWorld(loadingScreen, emptyPlayer, emptyPlayer);
+var world = new World(loadingScreen, emptyPlayer, emptyPlayer);
 
 var config = new Config(
     400,
@@ -59,7 +59,7 @@ var config = new Config(
     200,
     "localhost",
     8080,
-    50
+    10
 );
 
 var client = new GameClient(world, config);
