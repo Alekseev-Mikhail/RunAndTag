@@ -6,6 +6,8 @@ namespace RunAndTag;
 
 public class ClientSerializer(NetDataWriter writer, World world)
 {
+     private readonly PlayerInterpolation _interpolation = new(world, 90);
+     
     public void SerializeMovementInput(byte inputIndex, byte up, byte down, byte left, byte right)
     {
         writer.Put(MessageType.MovementInputType);
@@ -30,16 +32,15 @@ public class ClientSerializer(NetDataWriter writer, World world)
     public void DeserializeDeltaSnapshot(NetDataReader reader, byte lastInputIndex)
     {
         var inputIndex = reader.GetByte();
-        
-        if (inputIndex == lastInputIndex)
-        {
-            DeserializePosition(world.Me, reader);
-            DeserializePosition(world.Friend, reader);
-            return;
-        }
 
-        DeserializePosition(world.Friend, reader);
-        DeserializePosition(world.Friend, reader);
+        if (inputIndex == lastInputIndex) DeserializePosition(world.Me, reader);
+        else
+        {
+            reader.GetFloat();
+            reader.GetFloat();
+        }
+        
+        _interpolation.AddPointAndStart(reader.GetFloat(), reader.GetFloat());
     }
 
     private static void DeserializePosition(Player player, NetDataReader reader)
