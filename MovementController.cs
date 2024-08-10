@@ -61,7 +61,7 @@ public class MovementController(World world) : KeyboardController
     {
         WasMovement = true;
         LastInputIndex++;
-        _rayMath.Step(world.Me, world.Map, float.DegreesToRadians(direction), world.Me.MovementVelocity);
+        _rayMath.Step(world.Me, world.Map, direction, world.Me.MovementVelocity);
         
         if (_rayMath.ResultRay.IsWallExist) return;
         world.Me.X = _rayMath.ResultRay.Target.X;

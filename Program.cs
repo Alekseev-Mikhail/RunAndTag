@@ -56,7 +56,7 @@ var config = new Config(
     400,
     "Run 'n' Tag",
     8,
-    200,
+    300,
     "localhost",
     8080,
     10
