@@ -29,6 +29,8 @@ public class GameClient : RemoteClient
         );
         _movement = new MovementController(world);
         _serializer = new ClientSerializer(Writer, world);
+
+        _window.SetOnClosedAction(() => Server.Disconnect());
     }
 
     public void Connect() => Connect(_config.Address, _config.Port, _config.Tps);
@@ -39,7 +41,7 @@ public class GameClient : RemoteClient
     {
         if (!_movement.WasMovement) return;
         _movement.WasMovement = false;
-        
+
         _serializer.SerializeMovementInput(
             _movement.LastInputIndex,
             _movement.UpMoveCount,
